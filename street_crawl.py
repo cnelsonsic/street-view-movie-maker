@@ -5,12 +5,12 @@ from API_KEYS import API_KEY_DIRECTIONS, API_KEY_STREETVIEW
 '''Google Street View Movie Maker
 
 Usage is:
-	python2 ./street_crawl.py lat1 lon1 lat2 lon2 output_filestem picsize
+	python3 ./street_crawl.py lat1 lon1 lat2 lon2 output_filestem picsize
 
 640x640 is the maximum resolution allowed by the Google Street View API.
 
 For example, to make a one-second video of the entrance of Joshua Treet National Park at a 640x640 resolution:
-	python2 ./street_crawl.py 33.669793 -115.802125 33.671796 -115.801851 joshua_tree 640x640
+	python3 ./street_crawl.py 33.669793 -115.802125 33.671796 -115.801851 joshua_tree 640x640
 
 Note: usage requires your own API keys. API keys should be placed in a file called API_KEYS.py, with two variables called API_KEY_DIRECTIONS and API_KEY_STREETVIEW, e.g.:
 
