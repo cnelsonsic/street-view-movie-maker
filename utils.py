@@ -5,7 +5,7 @@ from __future__ import print_function
 
 import googlemaps
 from urllib.request import urlopen, urlretrieve
-import urllib, os
+import os
 import numpy as np
 import json
 import pandas as pd
@@ -40,11 +40,11 @@ def download_streetview_image(apikey_streetview, lat_lon, filename="image", save
 		print(url)
 	if get_metadata:
 		# Description of metadata API: https://developers.google.com/maps/documentation/streetview/intro#size
-		with urllib.urlopen(url) as response:
+		with urlopen(url) as response:
 			data = json.loads(response.read().decode("utf-8"))
 			return data
 	else:
-		urllib.urlretrieve(url, savepath+filename+fi)
+		urlretrieve(url, savepath+filename+fi)
 		return savepath+filename+fi
 
 # Gist copied from https://gist.github.com/jeromer/2005586 which is in the public domain:
@@ -84,7 +84,7 @@ def haversine(a_gps, b_gps):
 def interpolate_points(a_gps,b_gps,n_points=10,hop_size=None):
 	if hop_size is not None:
 		distance = haversine(a_gps, b_gps)
-		n_points = np.ceil(distance*1.0/hop_size)
+		n_points = int(np.ceil(distance*1.0/hop_size))
 	x = np.linspace(a_gps[0],b_gps[0],n_points)
 	y = np.linspace(a_gps[1],b_gps[1],n_points)
 	dense_points_list = zip(x,y)
@@ -314,8 +314,8 @@ def prune_repeated_images_from_list(list_of_files):
 def make_video(base_string, rate=20, video_string=None, picsize="640x640", basepath="./photos"):
 	if video_string is None:
 		video_string = base_string
-        print(basepath)
-        print(base_string)
+		print(basepath)
+		print(base_string)
 	print("ffmpeg -r {0} -f image2 -s {3} -i {4}/{1}%d.jpg -vcodec libx264 -crf 25 -pix_fmt yuv420p {2}.mp4 -y".format(rate, base_string, video_string, picsize, basepath))
 	subprocess.call("ffmpeg -r {0} -f image2 -s {3} -i {4}/{1}%d.jpg -vcodec libx264 -crf 25 -pix_fmt yuv420p {2}.mp4 -y".format(rate, base_string, video_string, picsize, basepath), shell=True)
 
